@@ -7,11 +7,19 @@
 //
 
 #import "Animation.h"
+#import <Masonry/Masonry.h>
+// 定义这个常量，就可以不用在开发过程中使用"mas_"前缀。
+#define MAS_SHORTHAND
+// 定义这个常量，就可以让Masonry帮我们自动把基础数据类型的数据，自动装箱为对象类型。
+#define MAS_SHORTHAND_GLOBALS
+
 @interface Animation()
 /**动画的View*/
 @property(nonatomic,strong)UIView *proPathView;
 /**位移*/
 @property(nonatomic,strong)UIButton *displacementBtn;
+/**底部View*/
+@property(nonatomic,strong)UIView *bottomView;
 @end
 @implementation Animation
 /*
@@ -29,6 +37,21 @@
               toValue keyPath对应的结束值。
     主要提供了对于CALayer对象中的可变属性进行简单动画的操作。
  */
+
+/*
+ * Masonry 
+    http://www.cocoachina.com/ios/20170109/18538.html
+     mas_makeConstraints()    添加约束
+     mas_remakeConstraints()  移除之前的约束，重新添加新的约束
+     mas_updateConstraints()  更新约束
+     
+     equalTo()       参数是对象类型，一般是视图对象或者mas_width这样的坐标系对象
+     mas_equalTo()   和上面功能相同，参数可以传递基础数据类型对象，可以理解为比上面的API更强大
+     
+     width()         用来表示宽度，例如代表view的宽度
+     mas_width()     用来获取宽度的值。和上面的区别在于，一个代表某个坐标系对象，一个用来获取坐标系对象的值
+    所以直接通过点语法就可以调用，还添加了and和with两个方法。这两个方法内部实际上什么都没干，只是在内部将self直接返回，功能就是为了更加方便阅读，对代码执行没有实际作用。
+ */
 #pragma mark - **************** 初始化
 -(instancetype)initWithFrame:(CGRect)frame
 {
@@ -42,10 +65,58 @@
 {
     [self addSubview:self.proPathView];
     self.proPathView.frame = CGRectMake(50, 100, 80, 80);
-    //添加位移按钮
-    [self addSubview:self.displacementBtn];
-//    self.displacementBtn.frame = cgrectmake
+    [self addSubview:self.bottomView];
+    [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self);
+        make.bottom.equalTo(self);
+        make.size.mas_equalTo(CGSizeMake([UIScreen mainScreen].bounds.size.width, 150));
+    }];
+    NSArray *btnArray = @[@"位移",@"透明度",@"缩放",@"旋转",@"背景色"];
+    for(int i=0;i<btnArray.count;i++)
+    {
+        //1.传入数组定义数据 2.创建按钮 2.1 标题和frame
+        [self addBtn:i title:btnArray[i]];
+    }
+  
 }
+#pragma mark - **************** 按钮点击方法
+-(void)displacementBtnClick:(UIButton *)sender
+{
+    if(sender.tag == 0)
+    {
+        //1.定义动画 2.给谁做动画 3.添加动画
+        CABasicAnimation *basiAni = [CABasicAnimation animationWithKeyPath:@"position.x"];
+        basiAni.fromValue = [NSValue valueWithCGPoint:CGPointMake(50, 100)];
+        basiAni.toValue = [NSValue valueWithCGPoint:CGPointMake(200, 100)];
+        basiAni.duration = 1.0f;
+        //动画执行完毕后 动画保持执行后的状态。图层的属性值还是动画执行前的初始值，并没有真正被改变
+        basiAni.fillMode = kCAFillModeForwards;
+        basiAni.removedOnCompletion = NO;
+        [self.proPathView.layer addAnimation:basiAni forKey:@"positionKey"];
+    }
+}
+
+#pragma mark - **************** 创建按钮
+-(void)addBtn:(NSInteger)index title:(NSString *)titleStr
+{
+    //计算每个按钮的frame 九宫格算法 
+    //每排4个
+    NSInteger num = 4;
+    CGFloat margin = 30;
+    CGFloat btnWidth = ([UIScreen mainScreen].bounds.size.width - 5*margin) / 4;
+    CGFloat btnHeight = 30;
+    CGFloat btnX = margin + (index%num) *(btnWidth + margin);
+    CGFloat btnY = margin + (index/num) *(btnHeight + margin);
+    UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(btnX, btnY, btnWidth, btnHeight)];
+    [btn setTitle:titleStr forState:UIControlStateNormal];
+    [btn setBackgroundColor:[UIColor grayColor]];
+    btn.titleLabel.font = [UIFont systemFontOfSize:13];
+    [btn addTarget:self action:@selector(displacementBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    btn.tag = index;
+    [self.bottomView addSubview:btn];
+    
+}
+
 
 #pragma mark - **************** 懒加载
 -(UIView *)proPathView
@@ -56,15 +127,12 @@
     }
     return _proPathView;
 }
-//位移
--(UIButton *)displacementBtn
+
+-(UIView *)bottomView
 {
-    if (!_displacementBtn) {
-        _displacementBtn = [[UIButton alloc]init];
-        [_displacementBtn setTitle:@"位移" forState:UIControlStateNormal];
-        [_displacementBtn setBackgroundColor:[UIColor grayColor]];
-        _displacementBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+    if (!_bottomView) {
+        _bottomView = [[UIView alloc]init];
     }
-    return _displacementBtn;
+    return _bottomView;
 }
 @end
