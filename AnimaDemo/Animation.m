@@ -13,7 +13,7 @@
 // 定义这个常量，就可以让Masonry帮我们自动把基础数据类型的数据，自动装箱为对象类型。
 #define MAS_SHORTHAND_GLOBALS
 
-@interface Animation()
+@interface Animation()<CAAnimationDelegate>
 /**动画的View*/
 @property(nonatomic,strong)UIView *proPathView;
 /**位移*/
@@ -82,24 +82,93 @@
 #pragma mark - **************** 按钮点击方法
 -(void)displacementBtnClick:(UIButton *)sender
 {
-    if(sender.tag == 0)
-    {
-        //1.定义动画 2.给谁做动画 3.添加动画
-        CABasicAnimation *basiAni = [CABasicAnimation animationWithKeyPath:@"position.x"];
-        basiAni.fromValue = [NSValue valueWithCGPoint:CGPointMake(50, 100)];
-        basiAni.toValue = [NSValue valueWithCGPoint:CGPointMake(200, 100)];
-        basiAni.duration = 1.0f;
-        //动画执行完毕后 动画保持执行后的状态。图层的属性值还是动画执行前的初始值，并没有真正被改变
-        basiAni.fillMode = kCAFillModeForwards;
-        basiAni.removedOnCompletion = NO;
-        [self.proPathView.layer addAnimation:basiAni forKey:@"positionKey"];
+    switch (sender.tag) {
+        case 0:
+        {
+            [self displacement];
+            break;
+        }
+        case 1:
+        {
+            [self opacityAniamtion];
+            break;
+        }
+        case 2:
+        {
+            [self scalAnimation];
+            break;
+        }
+        case 3: //帧动画
+            [self keyAnima];
+            break;
+        default:
+            break;
     }
+    
+
 }
+//位移
+-(void)displacement
+{
+    //1.定义动画 2.给谁做动画 3.添加动画
+    CABasicAnimation *basiAni = [CABasicAnimation animationWithKeyPath:@"position.x"];
+    basiAni.fromValue = [NSValue valueWithCGPoint:CGPointMake(50, 100)];
+    basiAni.toValue = [NSValue valueWithCGPoint:CGPointMake(200, 100)];
+    basiAni.duration = 1.0f;
+    //动画执行完毕后 动画保持执行后的状态。图层的属性值还是动画执行前的初始值，并没有真正被改变
+    basiAni.fillMode = kCAFillModeForwards;
+    basiAni.removedOnCompletion = NO;
+    [self.proPathView.layer addAnimation:basiAni forKey:@"positionKey"];
+}
+
+//透明度
+-(void)opacityAniamtion
+{
+    //主要是设置keyPath 2. 设置fromValue和toValue
+    CABasicAnimation *basiai = [CABasicAnimation animationWithKeyPath:@"opacity"];
+    basiai.fromValue = @0.2f;
+    basiai.toValue = @1.0f;
+    basiai.duration = 3.0f;
+    [self.proPathView.layer addAnimation:basiai forKey:@"opacityKey"];
+}
+-(void)scalAnimation
+{
+    CABasicAnimation *basiAni = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
+    basiAni.fromValue = @0.2f;
+    basiAni.toValue = @2.0f;
+    basiAni.duration = 1.0f;
+    [self.proPathView.layer addAnimation:basiAni forKey:@"scaleKey"];
+}
+
+//关键帧动画
+-(void)keyAnima
+{
+    //1.设置values 2.设置代理可以检测动画的开始和结束
+    CAKeyframeAnimation *keyAni = [CAKeyframeAnimation animationWithKeyPath:@"position"];
+    //设置代理可以监听动画的开始和结束。
+    keyAni.delegate =self;
+    UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(100, 100, 100, 100)];
+    keyAni.path = path.CGPath;
+    keyAni.duration = 2.0f;
+    [self.proPathView.layer addAnimation:keyAni forKey:@"pathKey"];
+    
+}
+
+-(void)animationDidStart:(CAAnimation *)anim
+{
+    NSLog(@"动画开始");
+}
+-(void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
+{
+    NSLog(@"动画结束");
+}
+
+
 
 #pragma mark - **************** 创建按钮
 -(void)addBtn:(NSInteger)index title:(NSString *)titleStr
 {
-    //计算每个按钮的frame 九宫格算法 
+    //计算每个按钮的frame 九宫格算法
     //每排4个
     NSInteger num = 4;
     CGFloat margin = 30;
@@ -116,8 +185,6 @@
     [self.bottomView addSubview:btn];
     
 }
-
-
 #pragma mark - **************** 懒加载
 -(UIView *)proPathView
 {
