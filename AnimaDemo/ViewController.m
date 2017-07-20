@@ -19,12 +19,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    self.circleView = [[CircleView alloc]initWithFrame: CGRectMake(60, 50, 200, 200)];
-//    self.circleView.frame = CGRectMake(60, 50, 200, 200);
-    self.circleView.backgroundColor = [UIColor yellowColor];
     [self.view addSubview:self.circleView];
-    
-   
 }
 
 
@@ -37,8 +32,8 @@
 -(CircleView *)circleView
 {
     if (!_circleView) {
-        _circleView = [[CircleView alloc]init];
-//        _circleView.backgroundColor = [UIColor yellowColor];
+        _circleView = [[CircleView alloc]initWithFrame: CGRectMake(60, 50, 200, 200)];
+        _circleView.backgroundColor = [UIColor yellowColor];
     }
     return _circleView;
 }
