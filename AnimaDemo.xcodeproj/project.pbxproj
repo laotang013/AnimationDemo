@@ -16,6 +16,8 @@
 		C9E081FF1F204A5C0036E6E7 /* AnimaDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E081FE1F204A5C0036E6E7 /* AnimaDemoTests.m */; };
 		C9E0820A1F204A5C0036E6E7 /* AnimaDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E082091F204A5C0036E6E7 /* AnimaDemoUITests.m */; };
 		C9E082191F204BBA0036E6E7 /* CircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E082181F204BBA0036E6E7 /* CircleView.m */; };
+		C9E0821C1F208CD50036E6E7 /* Animation.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E0821B1F208CD50036E6E7 /* Animation.m */; };
+		CCDF6882C03B43E0445BE221 /* libPods-AnimaDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E7D31023322E3C33CA134D9 /* libPods-AnimaDemo.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +38,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2851441970BD91FDB4F89260 /* Pods-AnimaDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AnimaDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AnimaDemo/Pods-AnimaDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		3E7D31023322E3C33CA134D9 /* libPods-AnimaDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AnimaDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9E081E11F204A5C0036E6E7 /* AnimaDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AnimaDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9E081E51F204A5C0036E6E7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C9E081E71F204A5C0036E6E7 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -54,6 +58,9 @@
 		C9E0820B1F204A5C0036E6E7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C9E082171F204BBA0036E6E7 /* CircleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleView.h; sourceTree = "<group>"; };
 		C9E082181F204BBA0036E6E7 /* CircleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleView.m; sourceTree = "<group>"; };
+		C9E0821A1F208CD50036E6E7 /* Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Animation.h; sourceTree = "<group>"; };
+		C9E0821B1F208CD50036E6E7 /* Animation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Animation.m; sourceTree = "<group>"; };
+		E558F43D9D7DAD9FF67AFAAA /* Pods-AnimaDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AnimaDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-AnimaDemo/Pods-AnimaDemo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CCDF6882C03B43E0445BE221 /* libPods-AnimaDemo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,6 +89,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7F2CB6BB0B0BB48F6692E79D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2851441970BD91FDB4F89260 /* Pods-AnimaDemo.debug.xcconfig */,
+				E558F43D9D7DAD9FF67AFAAA /* Pods-AnimaDemo.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		872CE275AE7DD88B9704E03E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3E7D31023322E3C33CA134D9 /* libPods-AnimaDemo.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		C9E081D81F204A5C0036E6E7 = {
 			isa = PBXGroup;
 			children = (
@@ -88,6 +113,8 @@
 				C9E081FD1F204A5C0036E6E7 /* AnimaDemoTests */,
 				C9E082081F204A5C0036E6E7 /* AnimaDemoUITests */,
 				C9E081E21F204A5C0036E6E7 /* Products */,
+				7F2CB6BB0B0BB48F6692E79D /* Pods */,
+				872CE275AE7DD88B9704E03E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -110,6 +137,8 @@
 				C9E081EB1F204A5C0036E6E7 /* ViewController.m */,
 				C9E082171F204BBA0036E6E7 /* CircleView.h */,
 				C9E082181F204BBA0036E6E7 /* CircleView.m */,
+				C9E0821A1F208CD50036E6E7 /* Animation.h */,
+				C9E0821B1F208CD50036E6E7 /* Animation.m */,
 				C9E081ED1F204A5C0036E6E7 /* Main.storyboard */,
 				C9E081F01F204A5C0036E6E7 /* Assets.xcassets */,
 				C9E081F21F204A5C0036E6E7 /* LaunchScreen.storyboard */,
@@ -152,9 +181,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C9E0820E1F204A5C0036E6E7 /* Build configuration list for PBXNativeTarget "AnimaDemo" */;
 			buildPhases = (
+				17380F25A15386D9FCB87C5D /* [CP] Check Pods Manifest.lock */,
 				C9E081DD1F204A5C0036E6E7 /* Sources */,
 				C9E081DE1F204A5C0036E6E7 /* Frameworks */,
 				C9E081DF1F204A5C0036E6E7 /* Resources */,
+				3A5CAE9347595A3C36B3EDC3 /* [CP] Embed Pods Frameworks */,
+				81FB9CE128F08B671B9575A7 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -274,11 +306,60 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		17380F25A15386D9FCB87C5D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		3A5CAE9347595A3C36B3EDC3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AnimaDemo/Pods-AnimaDemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		81FB9CE128F08B671B9575A7 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AnimaDemo/Pods-AnimaDemo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		C9E081DD1F204A5C0036E6E7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9E0821C1F208CD50036E6E7 /* Animation.m in Sources */,
 				C9E082191F204BBA0036E6E7 /* CircleView.m in Sources */,
 				C9E081EC1F204A5C0036E6E7 /* ViewController.m in Sources */,
 				C9E081E91F204A5C0036E6E7 /* AppDelegate.m in Sources */,
@@ -431,6 +512,7 @@
 		};
 		C9E0820F1F204A5C0036E6E7 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2851441970BD91FDB4F89260 /* Pods-AnimaDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = WU2WFZ2B66;
@@ -446,6 +528,7 @@
 		};
 		C9E082101F204A5C0036E6E7 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E558F43D9D7DAD9FF67AFAAA /* Pods-AnimaDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = WU2WFZ2B66;
@@ -524,6 +607,7 @@
 				C9E082101F204A5C0036E6E7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C9E082111F204A5C0036E6E7 /* Build configuration list for PBXNativeTarget "AnimaDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -532,6 +616,7 @@
 				C9E082131F204A5C0036E6E7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C9E082141F204A5C0036E6E7 /* Build configuration list for PBXNativeTarget "AnimaDemoUITests" */ = {
 			isa = XCConfigurationList;
@@ -540,6 +625,7 @@
 				C9E082161F204A5C0036E6E7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

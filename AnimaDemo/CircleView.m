@@ -23,6 +23,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self setupSubViews];
+        //[self AniMa];
     }
     return self;
 }
@@ -46,6 +47,8 @@
     circleShape.strokeColor = [UIColor redColor].CGColor;
     circleShape.fillColor = [UIColor clearColor].CGColor;
     circleShape.lineWidth = ProgressLineWidth;
+    //设置衔接的地方
+    circleShape.lineCap = kCALineCapRound;
     //circleShape.strokeStart = 0.3;
     //circleShape.strokeEnd = 0.5;
     
@@ -84,5 +87,31 @@
     circleShape.path = bezierPath.CGPath;
     [circleShape addAnimation:pathAni forKey:@"strokPathAni"];
     
+}
+
+
+- (void)AniMa{
+    UIBezierPath * path = [UIBezierPath bezierPathWithArcCenter:CGPointMake(self.bounds.size.width/2, 100) radius:(90) startAngle:degressToRaidus(135) endAngle:degressToRaidus(45) clockwise:YES];
+    
+    
+    CAShapeLayer * angleline = [CAShapeLayer layer];
+    angleline.frame = self.bounds;
+    angleline.lineCap = kCALineCapRound;
+    angleline.lineWidth = 14.0f;
+    angleline.path = path.CGPath;
+    angleline.fillColor = [UIColor clearColor].CGColor;
+    //angleline.strokeColor = [UIColor redColor].CGColor;
+    CAKeyframeAnimation * keyanimation = [CAKeyframeAnimation animationWithKeyPath:@"strokeColor"];
+    keyanimation.values = @[(id)[[UIColor blueColor] CGColor],
+                            (id)[[UIColor colorWithRed:0.9 green:0.0 blue:0.9 alpha:1.0] CGColor],
+                            (id)[[UIColor redColor] CGColor],(id)[[UIColor blueColor] CGColor]];
+    keyanimation.duration = 3.0f;
+    keyanimation.repeatCount = INFINITY;
+    keyanimation.removedOnCompletion = YES;
+    keyanimation.fillMode = kCAFillModeForwards;
+    keyanimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
+    [angleline addAnimation:keyanimation forKey:@"animation"];
+    [self.layer addSublayer:angleline];
+     [path stroke];
 }
 @end

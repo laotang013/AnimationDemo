@@ -9,9 +9,12 @@
 #define screenHeight [UIScreen mainScreen].bounds.size.height
 #import "ViewController.h"
 #import "CircleView.h"
+#import "Animation.h"
 @interface ViewController ()
 /**添加圆圈*/
 @property(nonatomic,strong)CircleView *circleView;
+/**动画界面*/
+@property(nonatomic,strong)Animation *animationView;
 @end
 
 @implementation ViewController
@@ -19,7 +22,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    [self.view addSubview:self.circleView];
+    //[self.view addSubview:self.circleView];
+    //添加动画界面
+    [self.view addSubview:self.animationView];
 }
 
 
@@ -36,5 +41,12 @@
         _circleView.backgroundColor = [UIColor yellowColor];
     }
     return _circleView;
+}
+-(Animation *)animationView
+{
+    if (!_animationView) {
+        _animationView = [[Animation alloc]initWithFrame:self.view.bounds];
+    }
+    return _animationView;
 }
 @end
