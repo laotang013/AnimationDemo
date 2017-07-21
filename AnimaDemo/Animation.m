@@ -48,11 +48,27 @@
          CAAnimationGroup *groupAnimation = [CAAnimationGroup animation];
          groupAnimation.animations = [NSArray arrayWithObjects:anima1,anima2,anima3, nil];
          groupAnimation.duration = 4.0f;
+      放到动画组中的动画可以并发执行。
+     动画组使用起来并不复杂，首先单独创建单个动画（可以是基础动画也可以是关键帧动画），然后将基础动画添加到动画组，最后将动画组添加到图层即可。
+ 
+         缩放:    [UIView animateWithDuration:0.0618f * 5
+         animations:^{
+         selectedButton.transform = CGAffineTransformMakeScale(3, 3);
+         selectedButton.alpha = 0.0f;
+         旋转:
+         [UIView animateWithDuration:0.0618f * 3
+         delay:0.0618f * 2
+         options:UIViewAnimationOptionCurveEaseIn
+         animations:^{
+         _pathCenterButton.transform = CGAffineTransformMakeRotation(0);
+         }
+         completion:nil];
+ }];
  
  */
 
 /*
- * Masonry 
+ * Masonry
     http://www.cocoachina.com/ios/20170109/18538.html
      mas_makeConstraints()    添加约束
      mas_remakeConstraints()  移除之前的约束，重新添加新的约束
@@ -323,7 +339,8 @@
     /*
      * 1.通过设置不同的属性值进行关键帧控制
      * 2.通过绘制路径进行关键帧控制。优先级高于1 如果设置了路径则属性值就不起作用。关键帧动画初始值不能省略。对于路径类型的关键帧动画系统是从描绘路径的位置开始路径直到路径结束。
-     
+     keyTimes:各个关键帧的时间控制，keyTimes储存的是时间占用比例点。
+     caculationMode:动画计算模式
      */
     
     CAKeyframeAnimation *anima = [CAKeyframeAnimation animationWithKeyPath:@"position"];
