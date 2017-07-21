@@ -64,7 +64,12 @@
      width()         用来表示宽度，例如代表view的宽度
      mas_width()     用来获取宽度的值。和上面的区别在于，一个代表某个坐标系对象，一个用来获取坐标系对象的值
     所以直接通过点语法就可以调用，还添加了and和with两个方法。这两个方法内部实际上什么都没干，只是在内部将self直接返回，功能就是为了更加方便阅读，对代码执行没有实际作用。
+  Cell 高度问题: 
  
+  UIScrollView自动布局:
+      给UIScrollView添加约束定义其frame,设置contentSize是定义其内部大小UIScrollView进行addSubView操作,都是将其子视图添加到contentView上。添加到UIScrollView上的子视图，对UIScrollView添加的约束都是作用于contentView上的。只需要按照这样的思路给UIScrollView设置约束，就可以掌握设置约束的技巧了。
+ 
+自动contentSize:主要是依赖于创建一个containerView内容视图，并添加到UIScrollView上作为子视图。UIScrollView原来的子视图都添加到containerView上，并且和这个视图设置约束。
  
  */
 #pragma mark - **************** 初始化
@@ -255,6 +260,9 @@
         case 3: //帧动画
             [self keyAnima];
             break;
+        case 4:
+            [self keyWithValues];
+            break;
         default:
             break;
     }
@@ -278,6 +286,7 @@
 //透明度
 -(void)opacityAniamtion
 {
+    //1.初始化动画并设置动画属性 2.设置动画属性的初始值结束值 3.给图层添加动画。
     //主要是设置keyPath 2. 设置fromValue和toValue
     CABasicAnimation *basiai = [CABasicAnimation animationWithKeyPath:@"opacity"];
     basiai.fromValue = @0.2f;
@@ -307,6 +316,37 @@
     [self.proPathView.layer addAnimation:keyAni forKey:@"pathKey"];
     
 }
+
+//关键帧
+-(void)keyWithValues
+{
+    /*
+     * 1.通过设置不同的属性值进行关键帧控制
+     * 2.通过绘制路径进行关键帧控制。优先级高于1 如果设置了路径则属性值就不起作用。关键帧动画初始值不能省略。对于路径类型的关键帧动画系统是从描绘路径的位置开始路径直到路径结束。
+     
+     */
+    
+    CAKeyframeAnimation *anima = [CAKeyframeAnimation animationWithKeyPath:@"position"];
+//    NSValue *value = [NSValue valueWithCGPoint:CGPointMake(150, 100)];
+//    NSValue *value1 = [NSValue valueWithCGPoint:CGPointMake(150, 200)];
+//    NSValue *value2 = [NSValue valueWithCGPoint:CGPointMake(50, 200)];
+//    anima.values = [NSArray arrayWithObjects:value,value1,value2, nil];
+    anima.duration = 2.0f;
+    
+    //设置路径
+    CGPathRef path = CGPathCreateMutable();
+    CGPathMoveToPoint(path, NULL, self.proPathView.layer.position.x, self.proPathView.layer.position.y);//移动到起始点的位置。
+    //绘制二次贝塞尔曲线
+    CGPathAddCurveToPoint(path, NULL, 160, 280, -30, 300, 55, 400);
+    anima.path = path;
+    
+    
+    anima.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+    //anima.beginTime = CACurrentMediaTime() + 2; //设置延迟2秒执行。
+    anima.delegate = self;
+    [self.proPathView.layer addAnimation:anima forKey:@"keyPath"];
+}
+
 
 -(void)animationDidStart:(CAAnimation *)anim
 {

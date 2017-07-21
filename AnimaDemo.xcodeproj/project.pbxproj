@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C95B4EFC1F21AD0C0052FAC7 /* TotalView.m in Sources */ = {isa = PBXBuildFile; fileRef = C95B4EFB1F21AD0C0052FAC7 /* TotalView.m */; };
 		C9E081E61F204A5C0036E6E7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E081E51F204A5C0036E6E7 /* main.m */; };
 		C9E081E91F204A5C0036E6E7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E081E81F204A5C0036E6E7 /* AppDelegate.m */; };
 		C9E081EC1F204A5C0036E6E7 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E081EB1F204A5C0036E6E7 /* ViewController.m */; };
@@ -40,6 +41,8 @@
 /* Begin PBXFileReference section */
 		2851441970BD91FDB4F89260 /* Pods-AnimaDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AnimaDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AnimaDemo/Pods-AnimaDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		3E7D31023322E3C33CA134D9 /* libPods-AnimaDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AnimaDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C95B4EFA1F21AD0C0052FAC7 /* TotalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TotalView.h; sourceTree = "<group>"; };
+		C95B4EFB1F21AD0C0052FAC7 /* TotalView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TotalView.m; sourceTree = "<group>"; };
 		C9E081E11F204A5C0036E6E7 /* AnimaDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AnimaDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9E081E51F204A5C0036E6E7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C9E081E71F204A5C0036E6E7 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -139,6 +142,8 @@
 				C9E082181F204BBA0036E6E7 /* CircleView.m */,
 				C9E0821A1F208CD50036E6E7 /* Animation.h */,
 				C9E0821B1F208CD50036E6E7 /* Animation.m */,
+				C95B4EFA1F21AD0C0052FAC7 /* TotalView.h */,
+				C95B4EFB1F21AD0C0052FAC7 /* TotalView.m */,
 				C9E081ED1F204A5C0036E6E7 /* Main.storyboard */,
 				C9E081F01F204A5C0036E6E7 /* Assets.xcassets */,
 				C9E081F21F204A5C0036E6E7 /* LaunchScreen.storyboard */,
@@ -362,6 +367,7 @@
 				C9E0821C1F208CD50036E6E7 /* Animation.m in Sources */,
 				C9E082191F204BBA0036E6E7 /* CircleView.m in Sources */,
 				C9E081EC1F204A5C0036E6E7 /* ViewController.m in Sources */,
+				C95B4EFC1F21AD0C0052FAC7 /* TotalView.m in Sources */,
 				C9E081E91F204A5C0036E6E7 /* AppDelegate.m in Sources */,
 				C9E081E61F204A5C0036E6E7 /* main.m in Sources */,
 			);
