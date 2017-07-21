@@ -28,7 +28,12 @@
     Core Animation是iOS和OSX平台上负责图形渲染与动画的基础框架。CoreAnimation 可以作用于动画视图或者其他
    可视元素，为你完成动画所需的大部分绘针工作。只需要设置开始点的位置和结束点的位置。
  CAAnimation 分为 CAAnimationGroup组动画 CAPropertyAnimation属性动画 以及转场动画CATransition
- 常用属性: 
+ CALayer的设计主要是为了内容展示和动画操作，CALayer本身并不包含在UIKit中,他不能响应事件.
+ http://www.cnblogs.com/kenshincui/p/3972100.html
+ CALayer中很少使用frame属性,因为frame本省不支持动画效果。通常使用bounds和position代替。
+ 透明度用opacity表示中心点用position而不是用center表示。anchorPoint属性是图层的锚点这个点永远和
+ position中心点重合。当图层中心点固定后，调整anchorPoint即可达到调整图层显示位置的作用（因为它永远和position重合）
+ 常用属性:
       path: 关键帧动画的执行路径。
       type:过渡动画的动画类型。
       subType:过渡动画的动画方向。
@@ -36,6 +41,14 @@
      重要属性: fromValue keyPath对应的初始值
               toValue keyPath对应的结束值。
     主要提供了对于CALayer对象中的可变属性进行简单动画的操作。
+    keyTimes:可以为对应的关键帧指定对应的时间点,其取值范围为0到1.0 keyTimes中的每一个时间值都对应values中
+    的每一帧当keyTimes没有设置的时候,各个关键帧的时间是平分。
+    组动画:CAAnimation的子类,可以保存一组动画对象，将CAAnimationGroup对象加入层后，组中所有对象可以同时并发运行。
+         animations:用来保存一组动画对象的NSArray.
+         CAAnimationGroup *groupAnimation = [CAAnimationGroup animation];
+         groupAnimation.animations = [NSArray arrayWithObjects:anima1,anima2,anima3, nil];
+         groupAnimation.duration = 4.0f;
+ 
  */
 
 /*
@@ -51,6 +64,8 @@
      width()         用来表示宽度，例如代表view的宽度
      mas_width()     用来获取宽度的值。和上面的区别在于，一个代表某个坐标系对象，一个用来获取坐标系对象的值
     所以直接通过点语法就可以调用，还添加了and和with两个方法。这两个方法内部实际上什么都没干，只是在内部将self直接返回，功能就是为了更加方便阅读，对代码执行没有实际作用。
+ 
+ 
  */
 #pragma mark - **************** 初始化
 -(instancetype)initWithFrame:(CGRect)frame
@@ -64,21 +79,160 @@
 -(void)setupSubViews
 {
     [self addSubview:self.proPathView];
-    self.proPathView.frame = CGRectMake(50, 100, 80, 80);
+    //self.proPathView.frame = CGRectMake(50, 100, 80, 80);
     [self addSubview:self.bottomView];
+    
+    [self.proPathView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self).offset(50);
+        make.top.equalTo(self).offset(100);
+        make.size.mas_equalTo(CGSizeMake(80, 80));
+    }];
+    
     [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self);
         make.bottom.equalTo(self);
         make.size.mas_equalTo(CGSizeMake([UIScreen mainScreen].bounds.size.width, 150));
     }];
+    
+    NSArray *array = @[[UIColor redColor],[UIColor blueColor],[UIColor greenColor]];
+    NSMutableArray *arrayView = [NSMutableArray array];
+    for(int i=0;i<3;i++)
+    {
+        UIView *view = [[UIView alloc]init];
+        view.backgroundColor = array[i];
+        [self addSubview:view];
+        [arrayView addObject:view];
+    }
+    
+    CGFloat padding = 20;
+    UIView *view = arrayView[0];
+    UIView *view1 = arrayView[1];
+    UIView *view2 = arrayView[2];
+    /*
+     * 思考: 1.主要是根据x,y以及宽度和高度 2.等宽的话需要确定高度 3.确定间距让其去拉伸确定宽度
+     * http://www.jianshu.com/p/8d346d155c12
+     */
+    
+    
+    [view mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self).offset(100);
+        make.left.equalTo(self).offset(padding);
+        make.right.equalTo(view1.mas_left).offset(-padding);
+        make.height.mas_equalTo(30);
+    }];
+    
+    [view1 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self).offset(100);
+        make.left.equalTo(view.mas_right).offset(padding);
+        make.width.equalTo(view);
+        make.height.equalTo(view);
+    }];
+    [view2 mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self).offset(100);
+        make.left.equalTo(view1.mas_right).offset(padding);
+        make.right.equalTo(self).offset(-padding);
+        make.height.equalTo(view);
+        make.width.equalTo(view);
+        
+    }];
+    
+    
+   
+    
+    
+    
+    
+    
+    
+    //更新约束
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//       //更新约束
+//       /*
+//        - (void)updateConstraintsIfNeeded  调用此方法，如果有标记为需要重新布局的约束，则立即进行重新布局，内部会调用updateConstraints方法
+//        - (void)updateConstraints          重写此方法，内部实现自定义布局过程
+//        - (BOOL)needsUpdateConstraints     当前是否需要重新布局，内部会判断当前有没有被标记的约束
+//        - (void)setNeedsUpdateConstraints  标记需要进行重新布局
+//        */
+//       [UIView animateWithDuration:2 animations:^{
+//           [self.proPathView mas_updateConstraints:^(MASConstraintMaker *make) {
+//               make.size.mas_equalTo(CGSizeMake(100, 100));
+//           }];
+//       }];
+//    });
+    
+
+    
+    
     NSArray *btnArray = @[@"位移",@"透明度",@"缩放",@"旋转",@"背景色"];
     for(int i=0;i<btnArray.count;i++)
     {
         //1.传入数组定义数据 2.创建按钮 2.1 标题和frame
         [self addBtn:i title:btnArray[i]];
     }
+    
+    //[self setupUI3];
   
 }
+
+
+
+// 搭建UI 多个视图的布局
+- (void) setupUI3
+{
+    __weak typeof(self) weakSelf = self;
+    CGFloat padding = 10.0f;
+    UIView * superView = UIView.new;
+    [self addSubview:superView];
+    superView.backgroundColor = [UIColor redColor];
+    [superView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(weakSelf).with.insets(UIEdgeInsetsMake(padding+64.0f, padding, padding, padding));
+    }];
+    
+    
+    NSInteger count = 3;
+    UIView * tempView = nil;
+    CGFloat height = 50.0f; // 高度固定等于50
+    for (NSInteger i = 0; i<count; i++) {
+        
+        UIView * subView = UIView.new;
+        [superView addSubview:subView];
+        subView.backgroundColor = [UIColor brownColor];
+        if (i == 0) {
+            [subView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(superView).offset(padding);
+                make.height.equalTo(@(height));
+                make.centerY.equalTo(superView);
+            }];
+            
+        } else if (i == count -1) {
+            [subView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(tempView.mas_right).offset(padding);
+                make.right.equalTo(superView.mas_right).offset(-padding);
+                make.height.equalTo(tempView);
+                make.width.equalTo(tempView);
+                make.centerY.equalTo(tempView);
+            }];
+            
+        } else {
+            [subView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(tempView.mas_right).offset(padding);
+                make.centerY.equalTo(tempView);
+                make.height.equalTo(tempView);
+                make.width.equalTo(tempView);
+                
+            }];
+            
+        }
+        
+        tempView = subView;
+        //[subView layoutIfNeeded];
+    }
+    
+}
+
+
+
+
 #pragma mark - **************** 按钮点击方法
 -(void)displacementBtnClick:(UIButton *)sender
 {
