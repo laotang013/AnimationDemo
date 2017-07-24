@@ -7,15 +7,25 @@
 //
 
 #import "TotalView.h"
+#import <Masonry/Masonry.h>
+@interface TotalView()
 
+@end
 @implementation TotalView
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self setupSubViews];
+    }
+    return self;
 }
-*/
-
+-(void)setupSubViews
+{
+    self.muchLabel = [[UILabel alloc]init];
+    self.muchLabel.textAlignment = NSTextAlignmentCenter;
+    self.muchLabel.text = @"修改";
+    self.muchLabel.textColor = [UIColor whiteColor];
+    [self addSubview:self.muchLabel];
+}
 @end

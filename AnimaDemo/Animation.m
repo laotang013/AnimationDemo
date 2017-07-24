@@ -65,6 +65,30 @@
          completion:nil];
  }];
  
+ http://blog.csdn.net/rhljiayou/article/details/9919713
+ CGContentexRef
+    Graphics Context是图形上下文，可以将其理解为一块画布,我们可以在上面进行绘画操作，绘制完成后，
+ 将画布放到我们的View中显示即可。View作为一个画框。
+ 
+ 
+ 
+ UIKit 系统中的动画
+      系统提供了animate标题打头的属于UIView的类方法可以让我们轻松制作动画效果。每一个这样的类方法提供了名为animations的block代码块。所有这些API的第一个参数都是用来设置动画时长的。
+       生成动画的属性大致分为三类:坐标尺寸(bounds/frame/center) 视图显示(backgroundColor/alpha/hidden/) 形态变化(transform修改这个属性可以实现旋转、形变、移动、翻转等动画效果)。
+ 动画参数:
+         Repeating
+         UIViewAnimationOptionRepeat       //动画循环执行
+         UIViewAnimationOptionAutoreverse  //动画在执行完毕后会反方向再执行一次
+         UIViewAnimationOptionCurveEaseInOut   //先加速后减速，默认
+         UIViewAnimationOptionCurveEaseIn      //由慢到快
+         UIViewAnimationOptionCurveEaseOut     //由快到慢
+         UIViewAnimationOptionCurveLinear      //匀速
+ 
+ 
+ 弹簧动画: 
+       + (void)animateWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay usingSpringWithDamping:(CGFloat)dampingRatio initialSpringVelocity:(CGFloat)velocity options:(UIViewAnimationOptions)options animations:(void (^)(void))animations completion:(void (^ __nullable)(BOOL finished))completion
+             dampingRatio：速度衰减比例。取值范围0 ~ 1，值越低震动越强
+             velocity：初始化速度，值越高则物品的速度越快
  */
 
 /*
@@ -86,6 +110,8 @@
       给UIScrollView添加约束定义其frame,设置contentSize是定义其内部大小UIScrollView进行addSubView操作,都是将其子视图添加到contentView上。添加到UIScrollView上的子视图，对UIScrollView添加的约束都是作用于contentView上的。只需要按照这样的思路给UIScrollView设置约束，就可以掌握设置约束的技巧了。
  
 自动contentSize:主要是依赖于创建一个containerView内容视图，并添加到UIScrollView上作为子视图。UIScrollView原来的子视图都添加到containerView上，并且和这个视图设置约束。
+ 
+ 
  
  */
 #pragma mark - **************** 初始化
